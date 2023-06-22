@@ -1,0 +1,73 @@
+{% load static %}
+
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="{% static 'app_css/style.css' %}">
+  <link rel="shortcut icon" href="{% static 'pj_image/r.png' %}" type="image/vnd.microsoft.icon">
+</head>
+<body>
+<h1>アニメデータベース</h1>
+<!-- formを追加 -->
+<form action="" method="get">
+    文字列
+    <input name="word" value="{{ request.GET.word }}" type="text" />
+    <button type="submit">検索する</button>
+</form>
+<table border="1">
+  <thead>
+    <tr>
+      <th>イメージ</th>
+      <th>タイトル</th>
+      <th>メディア</th>
+      <th>原作</th>
+      <th>評価</th>
+      <th>ジャンル</th>
+      <th>登録者</th>
+      <th>季節</th>
+      <th>サイト</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for anime in anime_list %}
+    <tr>
+      <td><img src="{{ anime.image_path }}" alt="{{ anime.title }}のイメージ" title="{{ anime.title }}のイメージ" width="140" height="192"></td>
+      <td><a href="{% url 'app:detail' anime.anime_id %}">{{ anime.title }}</a></td>
+      <td>{{ anime.media }}</td>
+      <td>{{ anime.source }}</td>
+      <td>{{ anime.rating }}</td>
+      <td>
+      {% for gen in anime.genres_set.all %}
+        <p>{{ gen.genre }}</p>
+      {% endfor %}
+    </td>
+      <td>{{ anime.members }}</td>
+      <td>{{ anime.season }}</td>
+      <td><a href="{{ anime.website }}">{{ anime.website }}</a></td>
+    </tr>  
+  {% endfor %}
+  </tbody>
+</table>
+
+<br>
+<!-- ページング処理の部分 -->
+<!-- 「前へ」の部分 -->
+{% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}">前へ</a>
+{% endif %}
+
+<!-- 数字部分 -->
+{% for num in page_obj.paginator.page_range %}
+    {% if page_obj.number == num %}
+        <span>{{ num }}</span>
+    {% else %}
+        <a href="?page={{ num }}">{{ num }}</a>
+    {% endif %}
+{% endfor %}
+
+<!-- 「次へ」 の部分 -->
+{% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">次へ</a>
+{% endif %}
+</body>
+</html>

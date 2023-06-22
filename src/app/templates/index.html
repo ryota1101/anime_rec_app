@@ -1,0 +1,15 @@
+{% load static %}
+
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="{% static 'app_css/style.css' %}">
+  <link rel="shortcut icon" href="{% static 'pj_image/fav.png' %}" type="image/vnd.microsoft.icon">
+</head>
+
+<body>
+    <h1>索引</h1>
+    <a href="{% url 'app:list' %}">アニメリスト</a>
+    <a href="{% url 'app:genre' %}">ジャンルリスト</a>
+</body>
+</html>
