@@ -9,11 +9,20 @@
 <body>
 <h1>アニメデータベース</h1>
 <!-- formを追加 -->
-<form action="" method="get">
-    文字列
-    <input name="word" value="{{ request.GET.word }}" type="text" />
-    <button type="submit">検索する</button>
+<h2>アニメ検索フォーム</h2>
+<form method="POST">
+    {% csrf_token %}
+    {% for field in test_form %}
+        <div>
+            {{ field.label }}:
+            <div>
+                {{ field }}
+            </div>
+        </div>
+    {% endfor %}
+    <input type="submit" id="button" name="button" value="検索">
 </form>
+  
 <table border="1">
   <thead>
     <tr>
