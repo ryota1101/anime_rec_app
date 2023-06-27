@@ -40,7 +40,7 @@
   <tbody>
   {% for anime in anime_list %}
     <tr>
-      <td><img src="{{ anime.image_path }}" alt="{{ anime.title }}のイメージ" title="{{ anime.title }}のイメージ" width="140" height="192"></td>
+      <td><a href="{% url 'app:rec' anime.anime_id %}"><img src="{{ anime.image_path }}" alt="{{ anime.title }}のイメージ" title="{{ anime.title }}のイメージ" width="140" height="192"></a></td>
       <td><a href="{% url 'app:detail' anime.anime_id %}">{{ anime.title }}</a></td>
       <td>{{ anime.media }}</td>
       <td>{{ anime.source }}</td>

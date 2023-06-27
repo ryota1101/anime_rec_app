@@ -6,6 +6,12 @@ from .models import Genre, Anime, Genres, Utility
 from .forms import SearchForm
 from django.db.models import Q
 
+import joblib
+from sklearn.neighbors import KNeighborsClassifier
+import scipy
+
+from gensim.models import KeyedVectors
+
 class FirstIndexView(generic.TemplateView):
     template_name = 'index.html'
 
@@ -69,12 +75,20 @@ class IndexView(generic.ListView):
             return Anime.objects.all()
     
 
-class GenreView(generic.ListView):
-    template_name = 'list_genre.html'
-    context_object_name = 'genre_list'
-    paginate_by = 2
+class RecView(generic.ListView):
+    template_name = 'rec_list.html'
+    context_object_name = 'rec_list'
+    paginate_by = 10
+    
     def get_queryset(self):
-        return Anime.objects.all()
+        # モデルの読み込み
+        #knn_model = joblib.load('static/model/knn_model.sav')
+        text = str(self.kwargs['pk'])
+        model = KeyedVectors.load_word2vec_format("static/model/myanimelist_user_word2vec.txt")
+        rec_list = model.most_similar(positive=text, topn=10)
+        rec_list = [int(i[0]) for i in rec_list]
+        #return Anime.objects.all()
+        return Anime.objects.filter(anime_id__in=rec_list)
     
 class DetailView(generic.DetailView):
     model = Anime

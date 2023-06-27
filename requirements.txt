@@ -2,3 +2,10 @@ Django
 django-bootstrap4
 uwsgi
 psycopg2
+gensim
+djangorestframework
+numpy
+scikit_learn
+pandas
+django-widgets-improved
+scipy

@@ -22,7 +22,8 @@
 {% endfor %}
 <h4>{{ anime.synopsis }}</h4>
 <!-- <h2>ジャンル：{{ anime.related_genres.all }}</h2> -->
-<h4>サイト：<a href="{{ anime.website }}">{{ anime.website }}</a></h4>
+<h4>サイト：<a href="{{ anime.website }}">{{ anime.website }}</a>
+<h2><a href="{% url 'app:rec' anime.anime_id %}">このアニメを見た人におすすめのアニメ</a></h2>
 <a href="{% url 'app:list' %}">戻る</a>
 </body>
 </html>

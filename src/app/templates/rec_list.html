@@ -1,0 +1,47 @@
+{% load static %}
+
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="{% static 'app_css/style.css' %}">
+  <link rel="shortcut icon" href="{% static 'pj_image/r.png' %}" type="image/vnd.microsoft.icon">
+</head>
+<body>
+<h1>おすすめアニメ</h1>
+<table border="1">
+  <thead>
+    <tr>
+      <th>イメージ</th>
+      <th>タイトル</th>
+      <th>メディア</th>
+      <th>原作</th>
+      <th>評価</th>
+      <th>ジャンル</th>
+      <th>登録者</th>
+      <th>季節</th>
+      <th>サイト</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for anime in rec_list %}
+    <tr>
+      <td><img src="{{ anime.image_path }}" alt="{{ anime.title }}のイメージ" title="{{ anime.title }}のイメージ" width="140" height="192"></td>
+      <td><a href="{% url 'app:detail' anime.anime_id %}">{{ anime.title }}</a></td>
+      <td>{{ anime.media }}</td>
+      <td>{{ anime.source }}</td>
+      <td>{{ anime.rating }}</td>
+      <td>
+      {% for gen in anime.genres_set.all %}
+        <p>{{ gen.genre }}</p>
+      {% endfor %}
+    </td>
+      <td>{{ anime.members }}</td>
+      <td>{{ anime.season }}</td>
+      <td><a href="{{ anime.website }}">{{ anime.website }}</a></td>
+    </tr>  
+  {% endfor %}
+  </tbody>
+</table>
+<a href="{% url 'app:list' %}">最初に戻る</a>
+</body>
+</html>
